@@ -1,10 +1,8 @@
-const { ipcMain } = require("electron");
+const { ipcMain } = require("electron")
+
+const pathToRows = require("./pathsToRows")
 
 ipcMain.on("process-subtitles", (event, paths) => {
-    console.log(paths);
-    event.reply("process-subtitles", [
-        {word: "i", amount:567},
-        {word: "you", amount: 478},
-        {word: "it", amount: 10}
-    ]);
+    pathToRows(paths)
+    .then(rows => prepareData(rows))
 });
