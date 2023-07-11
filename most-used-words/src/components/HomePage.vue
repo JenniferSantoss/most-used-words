@@ -29,17 +29,17 @@ export default {
     },
     data: function () {
         return {
-            groupedWords: [
-                {word: "i", amount:567},
-                {word: "you", amount: 478},
-                {word: "it", amount: 10}
-            ]
+            groupedWords: []
         }
     },
     methods: {
         processSubtitles() {
-            IpcRenderer.send ("blabla", "alo")
-            console.log(this.files)
+            let paths = this.files.map(f=>f.path)
+            ipcRenderer.send ("process-subtitles", paths)
+            ipcRenderer.on("process-subtitles", (event, resp) => {
+                this.groupedWords = resp
+            })
+            
         }
     }
 }
